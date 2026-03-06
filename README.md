@@ -1,5 +1,5 @@
 # CSCI-3340-04-Spring-2026-Project
-Team: Abiel Martinez, Sebastian Gomez
+Team: Abiel Martinez, Sebastian Gomez, Ricardo Adame
 
 
 ### project name:Unichat
