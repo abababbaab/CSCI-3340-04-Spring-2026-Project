@@ -2,7 +2,7 @@
 Team: Abiel Martinez, 
 
 
-### project name?????(sugestions: unichat, classchat)
+### project name:Unichat
 ---
 Name is a web application that allows students to communicate with each other about an assignment, like almost a pltl for each assigment. Users can send, delete, and edit messages.
 
