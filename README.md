@@ -4,7 +4,7 @@ Team: Abiel Martinez, Sebastian Gomez, Ricardo Adame
 
 ### project name:Unichat
 ---
-Name is a web application that allows students to communicate with each other about an assignment, like almost a pltl for each assigment. Users can send, delete, and edit messages.
+Unichat is a web application that allows students to communicate with each other about an assignment, like almost a pltl for each assigment. Users can send, delete, and edit messages.
 
 
 ### User stories:
@@ -36,4 +36,4 @@ Name is a web application that allows students to communicate with each other ab
 
   - Sprint 7: Set up multimedia.
   
-  **How many sprints do we need????????**
+  
