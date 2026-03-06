@@ -3,12 +3,12 @@ Team: Abiel Martinez,
 
 
 ### project name?????(sugestions: unichat, classchat)
-
+---
 Name is a web application that allows students to communicate with each other about an assignment, like almost a pltl for each assigment. Users can send, delete, and edit messages.
 
 
 ### User stories:
-
+---
   - As a student, I want to be able to message my classmates to discuss an assignment before going to a ta/teacher.
 
   - As a user, I want to be able to send text and pictures.
@@ -36,4 +36,4 @@ Name is a web application that allows students to communicate with each other ab
 
   - Sprint 7: Set up multimedia.
   
-  How many sprints do we need????????
+  **How many sprints do we need????????**
