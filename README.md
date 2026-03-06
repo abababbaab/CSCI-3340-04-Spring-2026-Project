@@ -9,7 +9,7 @@ Name is a web application that allows students to communicate with each other ab
 
 ### User stories:
 
-  *As a student, I want to be able to message my classmates to discuss an assignment before going to a ta/teacher.*
+  - As a student, I want to be able to message my classmates to discuss an assignment before going to a ta/teacher.
 
   *As a user, I want to be able to send text and pictures.
 
