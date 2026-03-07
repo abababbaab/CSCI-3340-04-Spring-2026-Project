@@ -28,12 +28,18 @@ Unichat is a web application that allows students to communicate with each other
   
   - Sprint 3: Set up web navigation.
 
-  - Sprint 4: Set up sending messages.
+  - Sprint 4: Set up database for messages.
 
-  - Sprint 5: Set up delete messages.
+  - Sprint 5: Set up sending messages.
 
-  - Sprint 6: Set up edit messages.
+  - Sprint 6: Set up delete messages.
 
-  - Sprint 7: Set up multimedia.
-  
+  - Sprint 7: Set up edit messages.
+
+  - Sprint 8: Set up multimedia.
+
+  - Sprint 9: Improving UI.
+
+  - Sprint 10: Final tests and modifications.
+
   
