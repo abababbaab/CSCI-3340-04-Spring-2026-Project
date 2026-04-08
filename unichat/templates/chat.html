@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classchat - Chat</title>
+
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<body class="chat-body">
+
+    <!-- NAVBAR (reuse yours) -->
+    <nav class="navbar">
+        <div class="navdiv">
+            <div class="logo">
+                <a href="/">class<span class="logo-chat">chat</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CHAT LAYOUT -->
+    <div class="chat-container">
+
+        <!-- LEFT: CLASSROOM LIST -->
+        <div class="chat-sidebar">
+            <h3>Classes</h3>
+
+            <div class="class-item active">CS 3340 - Section A</div>
+            <div class="class-item">Math 2413</div>
+            <div class="class-item">Physics 1301</div>
+        </div>
+
+        <!-- RIGHT: MESSAGES -->
+        <div class="chat-main">
+
+            <div class="chat-header">
+                CS 3340 - Section A
+            </div>
+
+            <div class="messages">
+
+                <div class="message other">
+                    <strong>Ana:</strong>
+                    <p>Did anyone finish the project yet?</p>
+                </div>
+
+                <div class="message me">
+                    <strong>You:</strong>
+                    <p>Almost done, just fixing bugs.</p>
+                </div>
+
+                <div class="message other">
+                    <strong>Chris:</strong>
+                    <p>Same here 😭</p>
+                </div>
+
+            </div>
+
+            <!-- INPUT -->
+            <div class="chat-input">
+                <input type="text" placeholder="Type a message...">
+                <button>Send</button>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
