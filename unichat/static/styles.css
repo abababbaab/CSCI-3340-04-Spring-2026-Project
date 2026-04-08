@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&display=swap');
+*
+{
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header
+{
+    background-color: #000;
+    padding: 70px 30px;
+    font-size: 35px;
+    color: white;
+    width: 100%;
+    
+}
+
+.navbar
+{
+    background: black; font-family: 'Space Mono'; padding: 20px 18px; width: 100%;
+}
+.navdiv
+{
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+    width: 100%;
+}
+.logo a
+{
+    font-size: 35px; font-weight: 600; color: white;
+}
+li
+{
+    list-style: none; display: inline-block;
+}
+li a
+{
+    color: white; font-size: 18px; font-weight: bold; margin-right: 25px;
+}
+button
+{
+    background-color: black; margin-left: 10px; border-radius: 10px;padding: 10px; width: 90px;
+}
+button a
+{
+    color: white; font-weight: bold; font-size: 15px;
+}
+.sideNav {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #111; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+.sideNav a{
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+.sideNav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.btn-login 
+{
+    color: rgba(255,255,255,0.6);
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+.btn-sign
+{
+    color: #000;
+    background: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.logo-chat 
+{
+    color: rgba(255,255,255,0.35);
+}
+.logo-mark {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #ffffff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* CHAT PAGE */
+
+.chat-body {
+    background: #0f0f0f;
+    color: white;
+    height: 100vh;
+}
+
+.chat-container {
+    display: flex;
+    height: calc(100vh - 80px);
+}
+
+/* LEFT SIDEBAR */
+.chat-sidebar {
+    width: 250px;
+    background: #111;
+    padding: 20px;
+    border-right: 1px solid #222;
+}
+
+.class-item {
+    padding: 12px;
+    margin-top: 10px;
+    background: #1a1a1a;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.class-item:hover {
+    background: #2a2a2a;
+}
+
+.class-item.active {
+    background: #333;
+}
+
+/* MAIN CHAT */
+.chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    padding: 15px;
+    border-bottom: 1px solid #222;
+    font-weight: bold;
+}
+
+.messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* MESSAGE BUBBLES */
+.message {
+    margin-bottom: 15px;
+    max-width: 60%;
+}
+
+.message p {
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 5px;
+}
+
+.message.other p {
+    background: #222;
+}
+
+.message.me {
+    margin-left: auto;
+    text-align: right;
+}
+
+.message.me p {
+    background: #ffffff;
+    color: black;
+}
+
+/* INPUT BAR */
+.chat-input {
+    display: flex;
+    padding: 15px;
+    border-top: 1px solid #222;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+}
+
+.chat-input button {
+    margin-left: 10px;
+    background: white;
+    color: black;
+    border: none;
+    cursor: pointer;
+}
