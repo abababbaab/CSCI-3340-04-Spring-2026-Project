@@ -21,6 +21,9 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path ('', include('unichat.urls')),
+<<<<<<< HEAD
+=======
     path('', include('unichat.urls')),
+>>>>>>> a1efda1 ( Added course/section creation feature)
 
 ]
