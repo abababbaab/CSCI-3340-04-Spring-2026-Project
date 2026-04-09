@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} Thread Detail {% endblock %}
+
+{% block header %}
+<h1>{{ thread.title }}</h1>
+
+{% for msg in messagess %}
+    <p><strong>{{ msg.author }}</strong>: {{ msg.body }}</p>
+{% endfor %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Reply</button>
+</form>
+
+
+
+{% endblock %}
