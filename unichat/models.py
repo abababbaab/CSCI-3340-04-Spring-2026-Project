@@ -1,8 +1,4 @@
 from django.db import models
-<<<<<<< HEAD
-
-# Create your models here.
-=======
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -30,4 +26,4 @@ class Course(models.Model):
         from django.utils import timezone
         now = timezone.now()
         return self.start_time <= now <= self.end_time
->>>>>>> a1efda1 ( Added course/section creation feature)
+

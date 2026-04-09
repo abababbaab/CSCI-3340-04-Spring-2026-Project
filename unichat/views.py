@@ -1,10 +1,3 @@
-from django.shortcuts import render, redirect
-<<<<<<< HEAD
-
-# Create your views here.
-def home(request):
-    return render(request,'home.html',{})
-=======
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Course
@@ -38,4 +31,4 @@ def course_create(request):
 def course_detail(request, pk):
     course = get_object_or_404(Course, pk=pk, created_by=request.user)
     return render(request, 'course_detail.html', {'course': course})
->>>>>>> a1efda1 ( Added course/section creation feature)
+
