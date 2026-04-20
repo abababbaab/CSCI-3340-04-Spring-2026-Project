@@ -43,3 +43,7 @@ Unichat is a web application that allows students to communicate with each other
   - Sprint 10: Final tests and modifications.
 
   
+### Prototype:
+---
+Figma: https://www.figma.com/proto/pbGfDLJjZX21ZIuEv9w5nz/Untitled?node-id=1-1045&p=f&t=YcMwpwi1h5K5e5oZ-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A1045
+
