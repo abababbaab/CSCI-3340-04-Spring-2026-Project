@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block title %} Thread Detail {% endblock %}
+
+{% block header %}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Source+Sans+3:wght@400;500&display=swap');
+
+  .thread-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+
+  .thread-title {
+    font-family: 'Lora', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    color: #1a1a2e;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid #e8e0f0;
+    letter-spacing: -0.5px;
+  }
+
+  .messages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .message-card {
+    background: #ffffff;
+    border: 1px solid #e4dff0;
+    border-left: 4px solid #7c5cbf;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 2px 8px rgba(124, 92, 191, 0.07);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .message-card:hover {
+    box-shadow: 0 4px 16px rgba(124, 92, 191, 0.13);
+    transform: translateY(-1px);
+  }
+
+  .message-author {
+    font-weight: 600;
+    color: #7c5cbf;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.35rem;
+  }
+
+  .message-body {
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .reply-section {
+    background: #f9f7fd;
+    border: 1px solid #e4dff0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(124, 92, 191, 0.06);
+  }
+
+  .reply-section h3 {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    color: #1a1a2e;
+    margin: 0 0 1rem 0;
+    text-align: center;
+  }
+
+  /* Style Django's form.as_p output */
+  .reply-section p {
+    margin: 0 0 1rem 0;
+  }
+
+  .reply-section label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 0.35rem;
+    letter-spacing: 0.3px;
+  }
+
+  .reply-section input[type="text"],
+  .reply-section textarea {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border: 1.5px solid #d5cce8;
+    border-radius: 8px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.97rem;
+    color: #222;
+    background: #fff;
+    box-sizing: border-box;
+    resize: vertical;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    min-height: 80px;
+  }
+
+  .reply-section input[type="text"]:focus,
+  .reply-section textarea:focus {
+    outline: none;
+    border-color: #7c5cbf;
+    box-shadow: 0 0 0 3px rgba(124, 92, 191, 0.12);
+  }
+
+  .reply-btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background: #7c5cbf;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: 0.5rem;
+  }
+
+  .reply-btn:hover {
+    background: #6344a8;
+    transform: translateY(-1px);
+  }
+
+  .reply-btn:active {
+    transform: translateY(0);
+  }
+</style>
+
+<div class="thread-wrapper">
+
+  <h1 class="thread-title">{{ thread.title }}</h1>
+
+  <div class="messages-list">
+    {% for msg in messagess %}
+    <div class="message-card">
+      <div class="message-author">{{ msg.author }}</div>
+      <p class="message-body">{{ msg.body }}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="reply-section">
+    <h3>Leave a Reply</h3>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="reply-btn">Reply</button>
+    </form>
+  </div>
+
+</div>
+
+{% endblock %}

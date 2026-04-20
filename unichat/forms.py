@@ -1,5 +1,29 @@
+from threading import Thread
+
 from django import forms
+from django.contrib.auth.models	import User
+from .models import Profile, Thread, Messagess
 from .models import Course
+
+class UserUpdateForm(forms.ModelForm):
+	class Meta:
+		model = User
+		fields =['first_name','last_name','email']
+
+class ProfileUpdateForm(forms.ModelForm):	#extra fields
+	class Meta:
+		model = Profile
+		fields = ['bio','age']	#phone
+
+class ThreadForm(forms.ModelForm):
+	class Meta:
+		model = Thread
+		fields = ['title']
+class MessageForm(forms.ModelForm):
+	class Meta:
+		model = Messagess
+		fields = ['body']
+
 
 
 class CourseForm(forms.ModelForm):
@@ -42,3 +66,5 @@ class CourseForm(forms.ModelForm):
         if start and end and end <= start:
             raise forms.ValidationError("End time must be after start time.")
         return cleaned_data
+
+
