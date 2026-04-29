@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} Assignment Create {% endblock %}
+
+{% block header %}
+<h1>Assignment Create</h1>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Create Thread</button>
+</form>
+
+<a href="{% url 'home' %}">Home</a>
+
+{% endblock %}

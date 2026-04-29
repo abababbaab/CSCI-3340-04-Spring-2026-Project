@@ -12,6 +12,8 @@ class Profile(models.Model):
 	def __str__(self):
 		return self.user.username
 
+#question thread
+#---------------------------------------------------------------------
 class Thread(models.Model):
 	title = models.CharField(max_length=200)
 	created_by = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -24,6 +26,9 @@ class Messagess(models.Model):
 	body = models.TextField()
 	created_at = models.DateTimeField(auto_now_add=True)
 
+
+#class stuff
+#--------------------------------------------------------------------
 class Course(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
@@ -48,4 +53,22 @@ class Course(models.Model):
         from django.utils import timezone
         now = timezone.now()
         return self.start_time <= now <= self.end_time
+
+
+#assigment
+#----------------------------------------------------------------------
+class Assignments(models.Model):
+    course = models.ForeignKey(Course, related_name= 'assignments', on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    created_by = models.ForeignKey(User,on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.title
+class AssignMessage(models.Model):
+    assignment = models.ForeignKey(Assignments, related_name= 'messagess', on_delete=models.CASCADE)
+    author = models.ForeignKey(User,on_delete=models.CASCADE)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
 

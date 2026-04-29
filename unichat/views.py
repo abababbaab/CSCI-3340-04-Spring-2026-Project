@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
-from .models import Thread, Messagess
-from .forms import UserUpdateForm, ProfileUpdateForm, ThreadForm, MessageForm
+from .models import Thread, Messagess, Assignments
+from .forms import UserUpdateForm, ProfileUpdateForm, ThreadForm, MessageForm, AssignForm, AssignMessForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -15,14 +15,6 @@ def home(request):
 
 def chat(request):
     return render(request, "chat.html", {})
-
-
-
-
-
-
-
-
 
 #def home(request):
     #return render(request,'home.html',{})
@@ -77,6 +69,43 @@ def thrd_create(request):
         form = ThreadForm()
     return render(request,'thrdcreate.html',{"form":form})
 
+#assigments
+#------------------------------------------------------------------------------------------------
+#need to fix course detail html first
+#def assign_list(request):
+ #   assignments = Assignments.objects.all().order_by('-created_at')
+  #  return render(request, '.html', {'assignments': assignments})
+def assign_detail(request,pk):
+    assignment = get_object_or_404(Assignments, pk=pk)
+    messagess = assignment.messagess.order_by('-created_at')
+    if request.method == "POST":
+        form = AssignMessForm(request.POST)
+        if form.is_valid():
+            msg = form.save(commit=False)
+            msg.assignment = assignment
+            msg.author = request.user
+            msg.save()
+            return redirect('assignmentdetail',pk=assignment.pk)
+    else:
+        form = AssignMessForm()
+    return render(request, 'assignm_det.html', {'assignment': assignment,
+                                                'form': form, 'messagess': messagess})
+def assign_create(request, pk):
+    course = get_object_or_404(Course, pk=pk)
+    if request.method == "POST":
+        form = AssignForm(request.POST)
+        if form.is_valid():
+            assignment = form.save(commit=False)
+            assignment.course = course
+            assignment.created_by = request.user
+            assignment.save()
+            return redirect('assignmentdetail',pk=assignment.pk)
+    else:
+        form = AssignForm()
+    return render(request, 'assign_create.html', {'form': form})
+
+
+
 
 #login/register system
 #-----------------------------------
@@ -112,7 +141,7 @@ def profile(request):
     return render(request, "profile.html", {"u_form": u_form, "p_form": p_form})
 
 
-#----------------------------
+#--------------------------------------------------------------------------------------------------------
 def course_list(request):
     courses = Course.objects.all().order_by('-created_at')
     return render(request, 'course_list.html', {'courses': courses})
@@ -133,5 +162,7 @@ def course_create(request):
 
 def course_detail(request, pk):
     course = get_object_or_404(Course, pk=pk, created_by=request.user)
-    return render(request, 'course_detail.html', {'course': course})
+    assignments = Assignments.objects.filter(course=course).order_by('-created_at')
+    return render(request, 'course_detail.html',
+                  {'course': course,'assignments': assignments})
 

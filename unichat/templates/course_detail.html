@@ -21,4 +21,14 @@
     <a href="{% url 'course_list' %}" class="btn btn-secondary ms-2">Cancel</a>
   </form>
 </div>
+<a href="{% url 'assignment_create' course.pk %}">Assign create</a>
+{% for assignment in assignments %}
+    <div>
+        <a href="{% url 'assignmentdetail' assignment.pk %}">{{ assignment.title }}</a>
+        <small>by {{ assignment.created_by }} - {{ assignment.created_at }}</small>
+    </div>
+    <hr>
+{% endfor %}
 {% endblock %}
+
+

@@ -1,16 +1,24 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>log in</title>
+</head>
+<body>
+  <h1>login</h1>
 
-{% block title %} log in {% endblock %}
 
-{% block header %}
-<h1>login</h1>
-
-
-<form method="post">
+  <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Login</button>
-</form>
+  </form>
 
-<a href="{% url 'register' %}">Register</a>
+  <a href="{% url 'register' %}">Register</a>
+</body>
+</html>
+
+
+{% block header %}
+
 {% endblock %}

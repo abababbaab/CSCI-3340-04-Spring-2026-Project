@@ -2,7 +2,7 @@ from threading import Thread
 
 from django import forms
 from django.contrib.auth.models	import User
-from .models import Profile, Thread, Messagess
+from .models import Profile, Thread, Messagess, Assignments, AssignMessage
 from .models import Course
 
 class UserUpdateForm(forms.ModelForm):
@@ -14,7 +14,7 @@ class ProfileUpdateForm(forms.ModelForm):	#extra fields
 	class Meta:
 		model = Profile
 		fields = ['bio','age']	#phone
-
+#thread---------------------------------------------------------------------
 class ThreadForm(forms.ModelForm):
 	class Meta:
 		model = Thread
@@ -23,7 +23,16 @@ class MessageForm(forms.ModelForm):
 	class Meta:
 		model = Messagess
 		fields = ['body']
+#assignment-----------------------------------------------------------------------
+class AssignForm(forms.ModelForm):
+    class Meta:
+        model = Assignments
+        fields = ['title']
 
+class AssignMessForm(forms.ModelForm):
+    class Meta:
+        model = AssignMessage
+        fields = ['body']
 
 
 class CourseForm(forms.ModelForm):
