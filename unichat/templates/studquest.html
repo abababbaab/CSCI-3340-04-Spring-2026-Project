@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Student Questions {% endblock %}
+
+{% block header %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unichat - Student Questions</title>
+    <link rel="stylesheet" href="{% static 'studquestStyles.css' %}">
+</head>
+<body>
+
+    <!-- TOPBAR -->
+    <nav class="topbar">
+        <a href="/" class="logo-wrap">
+            <div class="logo-mark">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 2H4C2.9 2 2 2.9 2 4v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 10H6V10h12v2zm0-3H6V7h12v2z"/>
+                </svg>
+            </div>
+            <span class="logo-name">Uni<span>chat</span></span>
+        </a>
+    </nav>
+
+    <div class="layout">
+
+        <!-- STATIC SIDENAV -->
+        <nav class="sidenav">
+            <span class="sidenav-section-label">Navigate</span>
+
+            <!-- Home link #1 -->
+            <a href="/">
+                <span class="sidenav-icon">&#8962;</span>
+                Home
+            </a>
+            <a href="/chat">
+                <span class="sidenav-icon">&#9997;</span>
+                Chat
+            </a>
+            <a href="/studentquestions" class="active">
+                <span class="sidenav-icon">&#10067;</span>
+                Student Questions
+            </a>
+
+            <div class="sidenav-divider"></div>
+            <span class="sidenav-section-label">Account</span>
+
+            <a href="/profile">
+                <span class="sidenav-icon">&#9786;</span>
+                Profile
+            </a>
+            <a href="/settings">
+                <span class="sidenav-icon">&#9881;</span>
+                Settings
+            </a>
+
+            <div class="sidenav-footer">
+                <div class="sidenav-divider"></div>
+                <!-- Home link #2 -->
+                <a href="/">&#8617; Back to Home</a>
+            </div>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+
+            <!-- Left info panel -->
+            <div class="info-panel">
+                <h1>Student Questions</h1>
+                <p class="subtitle">
+                    Post questions, share answers,<br>and learn together.
+                </p>
+
+                <button class="btn-new">
+                    <a href="{% url 'threadcreate' %}">+ New Thread</a>
+                </button>
+
+                <div class="info-stats">
+                    <div class="stat-row">
+                        <span class="stat-label">Total threads</span>
+                        <span class="stat-value">{{ threads|length }}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Status</span>
+                        <span class="stat-value">Open</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right threads panel -->
+            <div class="threads-panel">
+
+                <div class="threads-header">
+                    <span class="section-label">All Threads</span>
+                </div>
+
+                <div class="thread-list">
+                    {% for thread in threads %}
+                    <div class="thread-card"
+                         data-url="{% url 'threaddetail' thread.pk %}"
+                         onclick="window.location=this.dataset.url">
+
+                        <div class="thread-card-top">
+                            <a class="thread-title" href="{% url 'threaddetail' thread.pk %}">
+                                {{ thread.title }}
+                            </a>
+                            <span class="thread-arrow">&#8594;</span>
+                        </div>
+
+                        <p class="thread-desc">
+                            {{ thread.description|default:"No description provided. Click to read and reply to this thread." }}
+                        </p>
+
+                        <div class="thread-meta">
+                            <span class="thread-author">{{ thread.created_by }}</span>
+                            <span class="thread-date">{{ thread.created_at }}</span>
+                        </div>
+
+                    </div>
+                    {% empty %}
+                    <div class="empty-state">
+                        <strong>No threads yet.</strong>
+                        Be the first to start a conversation.
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+{% endblock %}

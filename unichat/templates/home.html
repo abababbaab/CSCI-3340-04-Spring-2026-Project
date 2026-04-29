@@ -21,6 +21,7 @@
                         <circle cx="9.5" cy="6.5" r="0.8" fill="#fff"/>
                     </svg>
                 </div>
+                <a href="/">Uni<span class="logo-chat">chat</span></a>
                 <a href="{% url 'home' %}">
             </div>
         <ul>
@@ -31,9 +32,9 @@
      </nav>
      <div id="mysideNav" class="sideNav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a>Home Page</a>
-        <a href="{% url 'chat' %}">Chat Page</a>
-        <a>Posting Form</a>
+        <a href="{% url 'chat' %}">Chats</a>
+        <a href="{% url 'studentquestions' %}">SQ</a>
+        <a href="{% url 'threadcreate' %}">Create thread</a>
      </div>
 
 

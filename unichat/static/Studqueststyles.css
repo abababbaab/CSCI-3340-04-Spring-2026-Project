@@ -1,0 +1,376 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* ── RESET ── */
+*, *::before, *::after {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ── BASE ── */
+body {
+    background: #f5f5f5;
+    color: #111;
+    font-family: 'Space Mono', monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+    background: #fff;
+    border-bottom: 2px solid #111;
+    padding: 0 28px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-mark {
+    width: 34px;
+    height: 34px;
+    border: 2px solid #111;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: #111;
+}
+
+.logo-mark svg {
+    width: 18px;
+    height: 18px;
+    fill: #fff;
+}
+
+.logo-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.5px;
+}
+
+.logo-name span {
+    color: rgba(0, 0, 0, 0.28);
+}
+
+/* ── LAYOUT ── */
+.layout {
+    display: flex;
+    flex: 1;
+    min-height: calc(100vh - 64px);
+}
+
+/* ── STATIC SIDENAV ── */
+.sidenav {
+    width: 230px;
+    flex-shrink: 0;
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    padding: 28px 0 24px;
+    border-right: 2px solid #000;
+    position: sticky;
+    top: 64px;
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+}
+
+.sidenav-section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #555;
+    padding: 0 22px 10px;
+    margin-top: 4px;
+}
+
+.sidenav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 22px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: #777;
+    border-left: 3px solid transparent;
+    transition: all 0.15s ease;
+}
+
+.sidenav a:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+    border-left-color: #fff;
+}
+
+.sidenav a.active {
+    color: #fff;
+    border-left-color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.sidenav-icon {
+    font-size: 15px;
+    width: 16px;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.sidenav-divider {
+    height: 1px;
+    background: #2a2a2a;
+    margin: 14px 22px;
+}
+
+.sidenav-footer {
+    margin-top: auto;
+    padding: 0;
+}
+
+.sidenav-footer a {
+    font-size: 11px;
+    color: #444;
+    padding: 10px 22px;
+    border-left: none !important;
+    background: none !important;
+}
+
+.sidenav-footer a:hover {
+    color: #aaa !important;
+    border-left-color: transparent !important;
+}
+
+/* ── MAIN AREA ── */
+.main {
+    flex: 1;
+    display: flex;
+    min-width: 0;
+}
+
+/* ── LEFT INFO PANEL ── */
+.info-panel {
+    width: 260px;
+    flex-shrink: 0;
+    padding: 40px 28px;
+    border-right: 1.5px solid #e0e0e0;
+    background: #fff;
+}
+
+.info-panel h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+}
+
+.info-panel .subtitle {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #888;
+    line-height: 1.9;
+    margin-bottom: 28px;
+}
+
+.btn-new {
+    display: block;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 12px 18px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s, transform 0.1s;
+    width: 100%;
+}
+
+.btn-new:hover {
+    background: #333;
+}
+
+.btn-new:active {
+    transform: scale(0.97);
+}
+
+.btn-new a {
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+}
+
+.info-stats {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #999;
+    letter-spacing: 0.3px;
+}
+
+.stat-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+}
+
+/* ── RIGHT THREADS PANEL ── */
+.threads-panel {
+    flex: 1;
+    padding: 32px 32px 60px;
+    min-width: 0;
+    background: #f5f5f5;
+}
+
+.threads-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #aaa;
+}
+
+/* ── THREAD CARDS ── */
+.thread-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.thread-card {
+    background: #fff;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px 22px;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.thread-card:hover {
+    border-color: #111;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+}
+
+.thread-card:hover .thread-arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.thread-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.thread-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+    line-height: 1.4;
+}
+
+.thread-title:hover {
+    color: #111;
+}
+
+.thread-arrow {
+    color: #111;
+    font-size: 16px;
+    opacity: 0;
+    transform: translateX(-5px);
+    transition: opacity 0.2s, transform 0.2s;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.thread-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #888;
+    line-height: 1.75;
+}
+
+.thread-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.thread-author {
+    background: #f0f0f0;
+    border-radius: 4px;
+    padding: 2px 8px;
+    color: #444;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+}
+
+.thread-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #bbb;
+}
+
+/* ── EMPTY STATE ── */
+.empty-state {
+    text-align: center;
+    padding: 60px 24px;
+    color: #bbb;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+}
+
+.empty-state strong {
+    display: block;
+    font-size: 16px;
+    color: #ccc;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
