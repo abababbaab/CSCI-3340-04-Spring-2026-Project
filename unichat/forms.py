@@ -3,6 +3,7 @@ from threading import Thread
 from django import forms
 from django.contrib.auth.models	import User
 from .models import Profile, Thread, Messagess, Assignments, AssignMessage
+from .models import Quiz, QMessage, Test, TMessage
 from .models import Course
 
 class UserUpdateForm(forms.ModelForm):
@@ -33,8 +34,27 @@ class AssignMessForm(forms.ModelForm):
     class Meta:
         model = AssignMessage
         fields = ['body']
+#quiz-----------------------------------------------------------------------------
+class QuizForm(forms.ModelForm):
+    class Meta:
+        model = Quiz
+        fields = ['title']
+class QuizMessForm(forms.ModelForm):
+    class Meta:
+        model = QMessage
+        fields = ['body']
+#test------------------------------------------------
+class TestForm(forms.ModelForm):
+    class Meta:
+        model = Test
+        fields = ['title']
+class TMessForm(forms.ModelForm):
+    class Meta:
+        model = TMessage
+        fields = ['body']
 
 
+#course------------------------------------------------------------
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course

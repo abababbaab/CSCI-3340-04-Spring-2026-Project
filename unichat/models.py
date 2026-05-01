@@ -69,6 +69,32 @@ class AssignMessage(models.Model):
     author = models.ForeignKey(User,on_delete=models.CASCADE)
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+#Quiz-------------------------------------------------------------------
+class Quiz(models.Model):
+    course = models.ForeignKey(Course, related_name= 'quizzes', on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    created_by = models.ForeignKey(User,on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.title
+class QMessage(models.Model):
+    quiz = models.ForeignKey(Quiz, related_name= 'messagess', on_delete=models.CASCADE)
+    author = models.ForeignKey(User,on_delete=models.CASCADE)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+#test------------------------------------------------------------------------
+class Test(models.Model):
+    course = models.ForeignKey(Course, related_name= 'tests', on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    created_by = models.ForeignKey(User,on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.title
+class TMessage(models.Model):
+    test = models.ForeignKey(Test, related_name= 'messagess', on_delete=models.CASCADE)
+    author = models.ForeignKey(User,on_delete=models.CASCADE)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 

@@ -33,6 +33,13 @@ urlpatterns = [
 #assignment stuff
     path('assignmentcreate/<int:pk>', views.assign_create, name='assignment_create'),
     path('assignments/<int:pk>/', views.assign_detail, name='assignmentdetail'),
-
+#-----------------------------------------------------------------------------
+#quiz stuff
+    path('quizcreate/<int:pk>', views.quiz_create, name='quiz_create'),
+    path('quiz/<int:pk>/', views.quiz_detail, name='quizdetail'),
+#---------------------------------------------------------------------------
+#test stuff
+    path('testcreate/<int:pk>', views.test_create, name='test_create'),
+    path('test/<int:pk>', views.test_detail, name='testdetail'),
 
 ]

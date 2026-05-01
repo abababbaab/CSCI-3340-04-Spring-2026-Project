@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
-from .models import Thread, Messagess, Assignments
-from .forms import UserUpdateForm, ProfileUpdateForm, ThreadForm, MessageForm, AssignForm, AssignMessForm
+from .models import Thread, Messagess, Assignments, Quiz, Test
+from .forms import UserUpdateForm, ProfileUpdateForm, ThreadForm, MessageForm, AssignForm, AssignMessForm, QuizForm, \
+    QuizMessForm, TMessForm, TestForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -71,10 +72,6 @@ def thrd_create(request):
 
 #assigments
 #------------------------------------------------------------------------------------------------
-#need to fix course detail html first
-#def assign_list(request):
- #   assignments = Assignments.objects.all().order_by('-created_at')
-  #  return render(request, '.html', {'assignments': assignments})
 def assign_detail(request,pk):
     assignment = get_object_or_404(Assignments, pk=pk)
     messagess = assignment.messagess.order_by('-created_at')
@@ -103,6 +100,68 @@ def assign_create(request, pk):
     else:
         form = AssignForm()
     return render(request, 'assign_create.html', {'form': form})
+#quiz
+#-------------------------------------------------------------------
+def quiz_detail(request,pk):
+    quiz = get_object_or_404(Quiz, pk=pk)
+    messagess = quiz.messagess.order_by('-created_at')
+    if request.method == "POST":
+        form = QuizMessForm(request.POST)
+        if form.is_valid():
+            msg = form.save(commit=False)
+            msg.quiz = quiz
+            msg.author = request.user
+            msg.save()
+            return redirect('quizdetail',pk=quiz.pk)
+    else:
+        form = QuizMessForm()
+    return render(request, 'quiz_det.html', {'quiz': quiz,
+                                             'form': form, 'messagess': messagess})
+def quiz_create(request, pk):
+    course = get_object_or_404(Course, pk=pk)
+    if request.method == "POST":
+        form = QuizForm(request.POST)
+        if form.is_valid():
+            quiz = form.save(commit=False)
+            quiz.course = course
+            quiz.created_by = request.user
+            quiz.save()
+            return redirect('quizdetail',pk=quiz.pk)
+    else:
+        form = QuizForm()
+    return render(request, 'quiz_create.html', {'form': form})
+#test
+#---------------------------------------------------------
+def test_detail(request,pk):
+    test = get_object_or_404(Test, pk=pk)
+    messagess = test.messagess.order_by('-created_at')
+    if request.method == "POST":
+        form = TMessForm(request.POST)
+        if form.is_valid():
+            msg = form.save(commit=False)
+            msg.test = test
+            msg.author = request.user
+            msg.save()
+            return redirect('testdetail',pk=test.pk)
+    else:
+        form = TMessForm()
+    return render(request, 'test_det.html', {'test': test,
+                                             'form': form, 'messagess': messagess})
+def test_create(request, pk):
+    course = get_object_or_404(Course, pk=pk)
+    if request.method == "POST":
+        form = TestForm(request.POST)
+        if form.is_valid():
+            test = form.save(commit=False)
+            test.course = course
+            test.created_by = request.user
+            test.save()
+            return redirect('testdetail',pk=test.pk)
+    else:
+        form = TestForm()
+    return render(request, 'test_create.html', {'form': form})
+
+
 
 
 
@@ -163,6 +222,9 @@ def course_create(request):
 def course_detail(request, pk):
     course = get_object_or_404(Course, pk=pk, created_by=request.user)
     assignments = Assignments.objects.filter(course=course).order_by('-created_at')
+    quizs = Quiz.objects.filter(course=course).order_by('-created_at')
+    tests = Test.objects.filter(course=course).order_by('-created_at')
     return render(request, 'course_detail.html',
-                  {'course': course,'assignments': assignments})
+                  {'course': course,'assignments': assignments,
+                   'quizs': quizs, 'tests': tests})
 

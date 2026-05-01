@@ -21,6 +21,7 @@
     <a href="{% url 'course_list' %}" class="btn btn-secondary ms-2">Cancel</a>
   </form>
 </div>
+
 <a href="{% url 'assignment_create' course.pk %}">Assign create</a>
 {% for assignment in assignments %}
     <div>
@@ -29,6 +30,28 @@
     </div>
     <hr>
 {% endfor %}
+
+
+<a href="{% url 'quiz_create' course.pk %}">Quiz create</a>
+{% for quiz in quizs %}
+    <div>
+        <a href="{% url 'quizdetail' quiz.pk %}">{{ quiz.title }}</a>
+        <small>by {{ quiz.created_by }} - {{ quiz.created_at }}</small>
+    </div>
+    <hr>
+{% endfor %}
+
+
+<a href="{% url 'test_create' course.pk %}">Test create</a>
+{% for test in tests %}
+    <div>
+        <a href="{% url 'testdetail' test.pk %}">{{ test.title }}</a>
+        <small>by {{ test.created_by }} - {{ test.created_at }}</small>
+    </div>
+    <hr>
+{% endfor %}
+
+
 {% endblock %}
 
 
