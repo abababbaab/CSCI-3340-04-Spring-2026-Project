@@ -49,3 +49,47 @@ class Course(models.Model):
         now = timezone.now()
         return self.start_time <= now <= self.end_time
 
+
+class Assignments(models.Model):
+    course = models.ForeignKey(Course, related_name='assignments', on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.title
+
+class AssignMessage(models.Model):
+    assignment = models.ForeignKey(Assignments, related_name='messagess', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class Quiz(models.Model):
+    course = models.ForeignKey(Course, related_name='quizzes', on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.title
+
+class QMessage(models.Model):
+    quiz = models.ForeignKey(Quiz, related_name='messagess', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class Test(models.Model):
+    course = models.ForeignKey(Course, related_name='tests', on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.title
+
+class TMessage(models.Model):
+    test = models.ForeignKey(Test, related_name='messagess', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
