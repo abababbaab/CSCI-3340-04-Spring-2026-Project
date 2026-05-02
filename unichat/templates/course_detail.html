@@ -1,24 +1,75 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<div class="container mt-4" style="max-width: 600px;">
-  <h2>{{ action }} Course</h2>
-  <form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-      <div class="mb-3">
-        <label class="form-label fw-semibold">{{ field.label }}</label>
-        {{ field }}
-        {% if field.errors %}
-          <div class="text-danger small mt-1">{{ field.errors }}</div>
-        {% endif %}
+<div class="container mt-4" style="max-width: 700px;">
+  <a href="{% url 'course_list' %}" class="text-decoration-none">← Back to courses</a>
+  <div class="card mt-3">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-start">
+        <h2 class="card-title">{{ course.name }}</h2>
+        <span class="badge {% if course.is_open %}bg-success{% else %}bg-secondary{% endif %} fs-6">
+          {% if course.is_open %}Open{% else %}Closed{% endif %}
+        </span>
       </div>
+      <p class="text-muted">{{ course.description }}</p>
+      <hr>
+      <p><strong>👥 Max Students:</strong> {{ course.max_students }}</p>
+      <p><strong>🕐 Chat Opens:</strong> {{ course.start_time|date:"F d, Y g:i A" }}</p>
+      <p><strong>🕐 Chat Closes:</strong> {{ course.end_time|date:"F d, Y g:i A" }}</p>
+    </div>
+  </div>
+
+  <!-- Assignments -->
+  <div class="mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4>Assignments</h4>
+      <a href="{% url 'assignment_create' course.pk %}" class="btn btn-sm btn-primary">+ Add Assignment</a>
+    </div>
+    {% for assignment in assignments %}
+      <div class="card mt-2">
+        <div class="card-body">
+          <a href="{% url 'assignmentdetail' assignment.pk %}">{{ assignment.title }}</a>
+          <small class="text-muted"> — by {{ assignment.created_by }} on {{ assignment.created_at|date:"M d, Y" }}</small>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-muted mt-2">No assignments yet.</p>
     {% endfor %}
-    {% if form.non_field_errors %}
-      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
-    {% endif %}
-    <button type="submit" class="btn btn-primary">{{ action }} Course</button>
-    <a href="{% url 'course_list' %}" class="btn btn-secondary ms-2">Cancel</a>
-  </form>
+  </div>
+
+  <!-- Quizzes -->
+  <div class="mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4>Quizzes</h4>
+      <a href="{% url 'quiz_create' course.pk %}" class="btn btn-sm btn-primary">+ Add Quiz</a>
+    </div>
+    {% for quiz in quizs %}
+      <div class="card mt-2">
+        <div class="card-body">
+          <a href="{% url 'quizdetail' quiz.pk %}">{{ quiz.title }}</a>
+          <small class="text-muted"> — by {{ quiz.created_by }} on {{ quiz.created_at|date:"M d, Y" }}</small>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-muted mt-2">No quizzes yet.</p>
+    {% endfor %}
+  </div>
+
+  <!-- Tests -->
+  <div class="mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4>Tests</h4>
+      <a href="{% url 'test_create' course.pk %}" class="btn btn-sm btn-primary">+ Add Test</a>
+    </div>
+    {% for test in tests %}
+      <div class="card mt-2">
+        <div class="card-body">
+          <a href="{% url 'testdetail' test.pk %}">{{ test.title }}</a>
+          <small class="text-muted"> — by {{ test.created_by }} on {{ test.created_at|date:"M d, Y" }}</small>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-muted mt-2">No tests yet.</p>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}
