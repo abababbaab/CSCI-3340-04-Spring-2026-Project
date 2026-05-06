@@ -215,3 +215,101 @@ button a
     border: none;
     cursor: pointer;
 }
+
+/* wrapper paragraph for each field */
+.form-wrap p {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+/* labels */
+.form-wrap label {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 6px;
+}
+
+/* inputs */
+.form-wrap input {
+    padding: 10px 12px;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    outline: none;
+    width: 100%;
+}
+
+.form-wrap input:focus {
+    border-color: #111;
+}
+
+/* the help text under username field */
+.form-wrap .helptext {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #999;
+    margin-top: 4px;
+}
+
+/* submit button */
+.form-wrap button[type="submit"] {
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.form-wrap button[type="submit"]:hover {
+    background: #333;
+}
+
+/* center the box on screen */
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 64px);
+    background: #f5f5f5;
+}
+
+/* the white box */
+.form-wrap {
+    background: #fff;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 40px;
+    width: 100%;
+    max-width: 420px;
+}
+
+.form-wrap h2 {
+    font-family: 'Space Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 24px;
+}
+
+.form-wrap a {
+    display: block;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #888;
+    margin-top: 16px;
+}
+
+.form-wrap a:hover {
+    color: #111;
+}

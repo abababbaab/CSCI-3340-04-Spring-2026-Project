@@ -1,16 +1,19 @@
-{% extends 'base.html' %}
+{% extends 'home.html' %}
+{% load static %}
 
-{% block title %} log in {% endblock %}
+{% block title %}Login{% endblock %}
+{% block nav_buttons %}{% endblock %}
 
-{% block header %}
-<h1>login</h1>
-
-
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
-
-<a href="{% url 'register' %}">Register</a>
+{% block content %}
+<div id="container">
+    <div class="form-wrap">
+        <h2>Log In</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Log In</button>
+        </form>
+        <a href="{% url 'register' %}">Don't have an account? Sign up</a>
+    </div>
+</div>
 {% endblock %}

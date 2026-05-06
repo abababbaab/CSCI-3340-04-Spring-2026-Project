@@ -5,11 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classchat</title>
-    
-    <link rel="stylesheet" href="{%static 'styles.css'%}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
-    <!-- Page content goes here -->
      <nav class="navbar">
         <div class="navdiv">
             <div class="logo" onclick="openNav()" style="cursor: pointer;">
@@ -22,14 +20,16 @@
                     </svg>
                 </div>
                 <a href="/">Uni<span class="logo-chat">chat</span></a>
-                <a href="{% url 'home' %}">
             </div>
-        <ul>
-            <button class="btn-login"><a href="#">Log in</a></button>
-            <button class="btn-signup"><a href="#">Sign up</a></button>
-        </ul>
+            <ul>
+                {% block nav_buttons %}
+                <button class="btn-login"><a href="{% url 'login' %}">Log in</a></button>
+                <button class="btn-signup"><a href="{% url 'register' %}">Sign up</a></button>
+                {% endblock %}
+            </ul>
         </div>
      </nav>
+
      <div id="mysideNav" class="sideNav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="{% url 'chat' %}">Chats</a>
@@ -37,18 +37,15 @@
         <a href="{% url 'threadcreate' %}">Create thread</a>
      </div>
 
-
+     {% block content %}{% endblock %}
 
     <script>
         function openNav() {
             document.getElementById("mysideNav").style.width = "250px";
         }
-
-        /* Set the width of the side navigation to 0 */
         function closeNav() {
             document.getElementById("mysideNav").style.width = "0";
-        } 
+        }
     </script>
-
 </body>
 </html>
