@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
-from .models import Thread, Messagess, Assignments, Quiz, Test
+from .models import Thread, Messagess, Assignments, Quiz, Test, ChatMessage
 from .forms import UserUpdateForm, ProfileUpdateForm, ThreadForm, MessageForm, AssignForm, AssignMessForm, QuizForm, \
     QuizMessForm, TMessForm, TestForm
 from django.contrib import messages
@@ -13,29 +13,31 @@ from .forms import CourseForm
 def home(request):
     return render(request,'home.html',{})
 
-
+@login_required
 def chat(request):
-    return render(request, "chat.html", {})
-
-#def home(request):
-    #return render(request,'home.html',{})
-#def chat(request):
- #   return render(request,'chat.html',{})
+    courses = Course.objects.all().order_by('name')
+    return render(request, 'chat.html', {'courses': courses})
+@login_required
 def classdash(request):
     return render(request,'clsdash.html',{})
+@login_required
 def classedit(request):
     return render(request,'clsedit.html',{})
+@login_required
 def classcode(request):
     return render(request,'clscode.html',{})
+@login_required
 def postedit(request):
     return render(request,'postedit.html',{})
 
 
 #thread stuff
 #------------------------
+@login_required
 def thrd_list(request):
     threads = Thread.objects.order_by('-created_at')# _on
     return render(request, 'studquest.html', {'threads': threads})
+@login_required
 def thrd_detail(request,pk):#thrd_id
     #thread = Thread.objects.get(id=thrd_id)#<--= get_object_or_404(Thread, pk=pk)
     #Posts = Post.objects.filter(thread=thread).order_by('-created_on')
@@ -55,7 +57,7 @@ def thrd_detail(request,pk):#thrd_id
         form = MessageForm()
     return render(request,'thrddetail.html',{
                         "form":form, 'thread':thread,'messagess':messagess})
-
+@login_required
 def thrd_create(request):
     if request.method == "POST":
         form = ThreadForm(request.POST)
@@ -72,6 +74,7 @@ def thrd_create(request):
 
 #assigments
 #------------------------------------------------------------------------------------------------
+@login_required
 def assign_detail(request,pk):
     assignment = get_object_or_404(Assignments, pk=pk)
     messagess = assignment.messagess.order_by('-created_at')
@@ -87,6 +90,7 @@ def assign_detail(request,pk):
         form = AssignMessForm()
     return render(request, 'assignm_det.html', {'assignment': assignment,
                                                 'form': form, 'messagess': messagess})
+@login_required
 def assign_create(request, pk):
     course = get_object_or_404(Course, pk=pk)
     if request.method == "POST":
@@ -102,6 +106,7 @@ def assign_create(request, pk):
     return render(request, 'assign_create.html', {'form': form})
 #quiz
 #-------------------------------------------------------------------
+@login_required
 def quiz_detail(request,pk):
     quiz = get_object_or_404(Quiz, pk=pk)
     messagess = quiz.messagess.order_by('-created_at')
@@ -117,6 +122,7 @@ def quiz_detail(request,pk):
         form = QuizMessForm()
     return render(request, 'quiz_det.html', {'quiz': quiz,
                                              'form': form, 'messagess': messagess})
+@login_required
 def quiz_create(request, pk):
     course = get_object_or_404(Course, pk=pk)
     if request.method == "POST":
@@ -132,6 +138,7 @@ def quiz_create(request, pk):
     return render(request, 'quiz_create.html', {'form': form})
 #test
 #---------------------------------------------------------
+@login_required
 def test_detail(request,pk):
     test = get_object_or_404(Test, pk=pk)
     messagess = test.messagess.order_by('-created_at')
@@ -147,6 +154,7 @@ def test_detail(request,pk):
         form = TMessForm()
     return render(request, 'test_det.html', {'test': test,
                                              'form': form, 'messagess': messagess})
+@login_required
 def test_create(request, pk):
     course = get_object_or_404(Course, pk=pk)
     if request.method == "POST":
@@ -201,11 +209,12 @@ def profile(request):
 
 
 #--------------------------------------------------------------------------------------------------------
+@login_required
 def course_list(request):
     courses = Course.objects.all().order_by('-created_at')
     return render(request, 'course_list.html', {'courses': courses})
 
-
+@login_required
 def course_create(request):
     if request.method == 'POST':
         form = CourseForm(request.POST)
@@ -218,7 +227,7 @@ def course_create(request):
         form = CourseForm()
     return render(request, 'course_form.html', {'form': form, 'action': 'Create'})
 
-
+@login_required
 def course_detail(request, pk):
     course = get_object_or_404(Course, pk=pk, created_by=request.user)
     assignments = Assignments.objects.filter(course=course).order_by('-created_at')
@@ -227,4 +236,42 @@ def course_detail(request, pk):
     return render(request, 'course_detail.html',
                   {'course': course,'assignments': assignments,
                    'quizs': quizs, 'tests': tests})
+
+#chat_messaging----------------------------------------------------------------------
+from django.http import JsonResponse
+import json
+from .models import ChatMessage
+
+@login_required
+def get_messages(request, course_id):
+    messages_qs = ChatMessage.objects.filter(
+        course_id=course_id
+    ).order_by('created_at').values(
+        'author__username', 'body', 'created_at'
+    )
+    data = [
+        {
+            'author': m['author__username'],
+            'body': m['body'],
+            'created_at': m['created_at'].strftime('%H:%M'),
+            'is_me': m['author__username'] == request.user.username
+        }
+        for m in messages_qs
+    ]
+    return JsonResponse(data, safe=False)
+
+@login_required
+def send_message(request, course_id):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        body = data.get('body', '').strip()
+        if body:
+            course = get_object_or_404(Course, pk=course_id)
+            ChatMessage.objects.create(
+                course=course,
+                author=request.user,
+                body=body
+            )
+            return JsonResponse({'status': 'ok'})
+    return JsonResponse({'status': 'error'}, status=400)
 

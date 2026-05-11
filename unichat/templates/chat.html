@@ -4,58 +4,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classchat - Chat</title>
-
+    <title>Unichat - Chat</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 
 <body class="chat-body">
 
-    <!-- NAVBAR (reuse yours) -->
     <nav class="navbar">
         <div class="navdiv">
-            <div class="logo">
-                <a href="/">class<span class="logo-chat">chat</span></a>
+            <div class="logo" onclick="openNav()" style="cursor: pointer;">
+                <div class="logo-mark">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 3.5C2 2.67 2.67 2 3.5 2h8C12.33 2 13 2.67 13 3.5v6c0 .83-.67 1.5-1.5 1.5H9l-2 2-2-2H3.5C2.67 11 2 10.33 2 9.5v-6z" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
+                        <circle cx="5.5" cy="6.5" r="0.8" fill="#fff"/>
+                        <circle cx="7.5" cy="6.5" r="0.8" fill="#fff"/>
+                        <circle cx="9.5" cy="6.5" r="0.8" fill="#fff"/>
+                    </svg>
+                </div>
+                <a href="{% url 'home' %}">Uni<span class="logo-chat">chat</span></a>
             </div>
         </div>
     </nav>
 
+    <!-- SIDENAV -->
+    <div id="mysideNav" class="sideNav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'chat' %}">Chat</a>
+        <a href="{% url 'studentquestions' %}">SQ</a>
+        <a href="{% url 'course_list' %}">Courses</a>
+    </div>
+
     <!-- CHAT LAYOUT -->
     <div class="chat-container">
 
-        <!-- LEFT: CLASSROOM LIST -->
+        <!-- LEFT: COURSE LIST -->
         <div class="chat-sidebar">
             <h3>Classes</h3>
 
-            <div class="class-item active">CS 3340 - Section A</div>
-            <div class="class-item">Math 2413</div>
-            <div class="class-item">Physics 1301</div>
+            {% for course in courses %}
+            <div class="class-item" data-course-id="{{ course.pk }}">
+                {{ course.name }}
+            </div>
+            {% empty %}
+            <p style="color:#555; font-size:12px; margin-top:12px;">No courses yet.</p>
+            {% endfor %}
         </div>
 
         <!-- RIGHT: MESSAGES -->
         <div class="chat-main">
 
             <div class="chat-header">
-                CS 3340 - Section A
+                Select a class to start chatting
             </div>
 
             <div class="messages">
-
-                <div class="message other">
-                    <strong>Ana:</strong>
-                    <p>Did anyone finish the project yet?</p>
-                </div>
-
-                <div class="message me">
-                    <strong>You:</strong>
-                    <p>Almost done, just fixing bugs.</p>
-                </div>
-
-                <div class="message other">
-                    <strong>Chris:</strong>
-                    <p>Same here 😭</p>
-                </div>
-
+                <p class="no-messages">Select a class on the left to load messages.</p>
             </div>
 
             <!-- INPUT -->
@@ -66,6 +70,18 @@
 
         </div>
     </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("mysideNav").style.width = "250px";
+        }
+        function closeNav() {
+            document.getElementById("mysideNav").style.width = "0";
+        }
+    </script>
+
+    <!-- load chat.js from static -->
+    <script src="{% static 'chatMessage.js' %}"></script>
 
 </body>
 </html>

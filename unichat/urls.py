@@ -42,4 +42,11 @@ urlpatterns = [
     path('testcreate/<int:pk>', views.test_create, name='test_create'),
     path('test/<int:pk>', views.test_detail, name='testdetail'),
 
+#chat_messaging---------------------------------------------------
+path('api/messages/<int:course_id>/', views.get_messages, name='get_messages'),
+path('api/messages/<int:course_id>/send/', views.send_message, name='send_message'),
+
+#logout---------------------------------------------------
+path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
+
 ]

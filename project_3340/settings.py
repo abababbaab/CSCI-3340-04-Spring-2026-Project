@@ -119,3 +119,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "unichat" /"static",
 ]
+
+# redirects
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'home'

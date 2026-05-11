@@ -96,5 +96,18 @@ class TMessage(models.Model):
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+#chat-messaging----------------------------------------------------------
+class ChatMessage(models.Model):
+    course = models.ForeignKey(Course, related_name='chat_messages', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['created_at']
+
+    def __str__(self):
+        return f'{self.author.username}: {self.body[:30]}'
+
 
 
