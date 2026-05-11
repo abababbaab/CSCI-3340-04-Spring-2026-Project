@@ -1,175 +1,53 @@
-{% extends 'home.html' %}
-
-{% block title %} Thread Detail {% endblock %}
-
+{% extends 'baseold.html' %}
 {% block content %}
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Source+Sans+3:wght@400;500&display=swap');
-
-  .thread-wrapper {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 2rem 1rem 4rem;
-    font-family: 'Source Sans 3', sans-serif;
-  }
-
-  .thread-title {
-    font-family: 'Lora', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    text-align: center;
-    color: #1a1a2e;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 3px solid #e8e0f0;
-    letter-spacing: -0.5px;
-  }
-
-  .messages-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .message-card {
-    background: #ffffff;
-    border: 1px solid #e4dff0;
-    border-left: 4px solid #7c5cbf;
-    border-radius: 10px;
-    padding: 1rem 1.25rem;
-    box-shadow: 0 2px 8px rgba(124, 92, 191, 0.07);
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
-  }
-
-  .message-card:hover {
-    box-shadow: 0 4px 16px rgba(124, 92, 191, 0.13);
-    transform: translateY(-1px);
-  }
-
-  .message-author {
-    font-weight: 600;
-    color: #7c5cbf;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 0.35rem;
-  }
-
-  .message-body {
-    color: #333;
-    font-size: 1rem;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  .reply-section {
-    background: #f9f7fd;
-    border: 1px solid #e4dff0;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 10px rgba(124, 92, 191, 0.06);
-  }
-
-  .reply-section h3 {
-    font-family: 'Lora', serif;
-    font-size: 1.1rem;
-    color: #1a1a2e;
-    margin: 0 0 1rem 0;
-    text-align: center;
-  }
-
-  /* Style Django's form.as_p output */
-  .reply-section p {
-    margin: 0 0 1rem 0;
-  }
-
-  .reply-section label {
-    display: block;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #555;
-    margin-bottom: 0.35rem;
-    letter-spacing: 0.3px;
-  }
-
-  .reply-section input[type="text"],
-  .reply-section textarea {
-    width: 100%;
-    padding: 0.65rem 0.9rem;
-    border: 1.5px solid #d5cce8;
-    border-radius: 8px;
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 0.97rem;
-    color: #222;
-    background: #fff;
-    box-sizing: border-box;
-    resize: vertical;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    min-height: 80px;
-  }
-
-  .reply-section input[type="text"]:focus,
-  .reply-section textarea:focus {
-    outline: none;
-    border-color: #7c5cbf;
-    box-shadow: 0 0 0 3px rgba(124, 92, 191, 0.12);
-  }
-
-  .reply-btn {
-    display: block;
-    width: 100%;
-    padding: 0.75rem;
-    background: #7c5cbf;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    letter-spacing: 0.3px;
-    transition: background 0.2s, transform 0.15s;
-    margin-top: 0.5rem;
-  }
-
-  .reply-btn:hover {
-    background: #6344a8;
-    transform: translateY(-1px);
-  }
-
-  .reply-btn:active {
-    transform: translateY(0);
-  }
+  .thread-wrap { max-width: 640px; margin: 0 auto; padding: 1.5rem 1rem; }
+  .msg-box { background: #fff; border: 0.5px solid rgba(0,0,0,0.12); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .msg-body { font-size: 16px; color: #111; margin: 0 0 6px; line-height: 1.5; }
+  .msg-author { font-size: 12px; color: #888; margin: 0; }
+  .msg-edit { font-size: 12px; color: #185FA5; text-decoration: none; display: inline-block; margin-top: 6px; }
+  .reply-row { display: flex; gap: 8px; align-items: center; margin-top: 1rem; }
+  .reply-row textarea { flex: 1; resize: none; height: 42px; padding: 10px 12px; font-size: 14px; border-radius: 8px; border: 0.5px solid rgba(0,0,0,0.25); line-height: 1.4; }
+  .reply-row textarea:focus { outline: none; border-color: #185FA5; box-shadow: 0 0 0 2px rgba(24,95,165,0.15); }
+  .reply-btn { flex-shrink: 0; height: 42px; padding: 0 18px; background: #185FA5; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
+  .reply-btn:hover { background: #0C447C; }
+  .divider { border: none; border-top: 0.5px solid rgba(0,0,0,0.1); margin: 1rem 0; }
 </style>
 
-<div class="thread-wrapper">
+<div class="thread-wrap">
 
-  <h1 class="thread-title">{{ thread.title }}</h1>
-  {% if request.user == thread.created_by %}
-    <a href="{% url 'threadedit' thread.pk %}">Edit Thread</a>
-  {% endif %}
-  <div class="messages-list">
-    {% for msg in messagess %}
-    <div class="message-card">
-      <div class="message-author">{{ msg.author }}</div>
-      <p class="message-body">{{ msg.body }}</p>
-      {% if request.user == msg.author %}
-        <a href="{% url 'messedit' msg.pk %}">Edit</a>
+  <a href="{% url 'studentquestions' %}" class="text-decoration-none">← Back</a>
+
+  <div class="card mt-3 mb-4">
+    <div class="card-body">
+      <h2>{{ thread.title }}</h2>
+      <p class="text-muted">Created by {{ thread.created_by }} on {{ thread.created_at|date:"F d, Y" }}</p>
+      {% if request.user == thread.created_by %}
+        <a href="{% url 'threadedit' thread.pk %}">Edit Thread</a>
       {% endif %}
     </div>
-    {% endfor %}
   </div>
 
-  <div class="reply-section">
-    <h3>Leave a Reply</h3>
-    <form method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="reply-btn">Reply</button>
-    </form>
+  {% for msg in messagess %}
+  <div class="msg-box">
+    <p class="msg-body">{{ msg.body }}</p>
+    <p class="msg-author">{{ msg.author }}</p>
+    {% if request.user == msg.author %}
+      <a href="{% url 'messedit' msg.pk %}" class="msg-edit">✏ Edit</a>
+    {% endif %}
   </div>
+  {% endfor %}
+
+  <hr class="divider">
+
+  <form method="POST">
+    {% csrf_token %}
+    <div class="reply-row">
+      {{ form.body }}
+      <button type="submit" class="reply-btn">Reply</button>
+    </div>
+  </form>
 
 </div>
 
