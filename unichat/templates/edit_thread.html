@@ -1,20 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Thread edit</title>
-</head>
-<body>
-    <h1>Thread edit</h1>
+{% extends 'baseold.html' %}
+{% block content %}
+
+<style>
+  .thread-wrap { max-width: 640px; margin: 0 auto; padding: 1.5rem 1rem; }
+  .msg-box { background: #fff; border: 0.5px solid rgba(0,0,0,0.12); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .reply-row { display: flex; gap: 8px; align-items: center; margin-top: 1rem; }
+  .reply-row textarea { flex: 1; resize: none; height: 42px; padding: 10px 12px; font-size: 14px; border-radius: 8px; border: 0.5px solid rgba(0,0,0,0.25); line-height: 1.4; }
+  .reply-row textarea:focus { outline: none; border-color: #185FA5; box-shadow: 0 0 0 2px rgba(24,95,165,0.15); }
+  .save-btn { height: 42px; padding: 0 18px; background: #185FA5; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
+  .save-btn:hover { background: #0C447C; }
+  .delete-btn { height: 42px; padding: 0 18px; background: #fff; color: #c0392b; border: 0.5px solid #c0392b; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
+  .delete-btn:hover { background: #fdf0ef; }
+  .cancel-link { font-size: 14px; color: #555; text-decoration: none; }
+  .cancel-link:hover { color: #111; }
+  .divider { border: none; border-top: 0.5px solid rgba(0,0,0,0.1); margin: 1rem 0; }
+  .action-row { display: flex; gap: 8px; align-items: center; margin-top: 1rem; }
+</style>
+
+<div class="thread-wrap">
+
+  <a href="{% url 'threaddetail' thread.pk %}" class="text-decoration-none">← Back</a>
+
+  <div class="card mt-3 mb-4">
+    <div class="card-body">
+      <h2>Edit Thread</h2>
+    </div>
+  </div>
+
+  <div class="msg-box">
     <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-        <a href="{% url 'threaddetail' thread.pk %}">Cancel</a>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="action-row">
+        <button type="submit" class="save-btn">Save</button>
+        <a href="{% url 'threaddetail' thread.pk %}" class="cancel-link">Cancel</a>
+      </div>
     </form>
-    <form method="post" action="{% url 'threaddelete' thread.pk %}">
-        {% csrf_token %}
-        <button type="submit" onclick="return confirm('Delete this thread?')">Delete</button>
-    </form>
-</body>
-</html>
+  </div>
+
+  <hr class="divider">
+
+  <form method="POST" action="{% url 'threaddelete' thread.pk %}">
+    {% csrf_token %}
+    <div class="action-row">
+      <button type="submit" class="delete-btn" onclick="return confirm('Delete this Thread?')">Delete Thread</button>
+    </div>
+  </form>
+
+</div>
+
+{% endblock %}
+
+

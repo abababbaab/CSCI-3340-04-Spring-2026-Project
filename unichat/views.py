@@ -119,6 +119,7 @@ def delete_message(request,pk):
 @login_required
 def assign_detail(request,pk):
     assignment = get_object_or_404(Assignments, pk=pk)
+    course = get_object_or_404(Course, pk=assignment.course.pk)
     messagess = assignment.messagess.order_by('-created_at')
     if request.method == "POST":
         form = AssignMessForm(request.POST)
@@ -131,7 +132,7 @@ def assign_detail(request,pk):
     else:
         form = AssignMessForm()
     return render(request, 'assignm_det.html', {'assignment': assignment,
-                                                'form': form, 'messagess': messagess})
+                                                'form': form, 'messagess': messagess, 'course': course})
 @login_required
 def assign_create(request, pk):
     course = get_object_or_404(Course, pk=pk)
@@ -145,7 +146,7 @@ def assign_create(request, pk):
             return redirect('assignmentdetail',pk=assignment.pk)
     else:
         form = AssignForm()
-    return render(request, 'assign_create.html', {'form': form})
+    return render(request, 'assign_create.html', {'form': form, 'course':course})
 @login_required
 def edit_assignment(request,pk):
     assignment = get_object_or_404(Assignments, pk=pk)
@@ -199,6 +200,7 @@ def del_amessage(request,pk):
 @login_required
 def quiz_detail(request,pk):
     quiz = get_object_or_404(Quiz, pk=pk)
+    course = get_object_or_404(Course, pk=quiz.course.pk)
     messagess = quiz.messagess.order_by('-created_at')
     if request.method == "POST":
         form = QuizMessForm(request.POST)
@@ -211,7 +213,7 @@ def quiz_detail(request,pk):
     else:
         form = QuizMessForm()
     return render(request, 'quiz_det.html', {'quiz': quiz,
-                                             'form': form, 'messagess': messagess})
+                                             'form': form, 'messagess': messagess, 'course': course})
 @login_required
 def quiz_create(request, pk):
     course = get_object_or_404(Course, pk=pk)
@@ -225,7 +227,7 @@ def quiz_create(request, pk):
             return redirect('quizdetail',pk=quiz.pk)
     else:
         form = QuizForm()
-    return render(request, 'quiz_create.html', {'form': form})
+    return render(request, 'quiz_create.html', {'form': form, 'course': course})
 @login_required
 def edit_quiz(request,pk):
     quiz = get_object_or_404(Quiz, pk=pk)
@@ -278,6 +280,7 @@ def del_qmessage(request,pk):
 @login_required
 def test_detail(request,pk):
     test = get_object_or_404(Test, pk=pk)
+    course = get_object_or_404(Course, pk=test.course.pk)
     messagess = test.messagess.order_by('-created_at')
     if request.method == "POST":
         form = TMessForm(request.POST)
@@ -290,7 +293,7 @@ def test_detail(request,pk):
     else:
         form = TMessForm()
     return render(request, 'test_det.html', {'test': test,
-                                             'form': form, 'messagess': messagess})
+                                             'form': form, 'messagess': messagess, 'course': course})
 @login_required
 def test_create(request, pk):
     course = get_object_or_404(Course, pk=pk)
@@ -304,7 +307,7 @@ def test_create(request, pk):
             return redirect('testdetail',pk=test.pk)
     else:
         form = TestForm()
-    return render(request, 'test_create.html', {'form': form})
+    return render(request, 'test_create.html', {'form': form, 'course': course})
 @login_required
 def edit_test(request,pk):
     test = get_object_or_404(Test, pk=pk)
