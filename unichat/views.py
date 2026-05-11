@@ -37,7 +37,7 @@ def postedit(request):
 #------------------------
 @login_required
 def thrd_list(request):
-    threads = Thread.objects.order_by('-created_at')# _on
+    threads = Thread.objects.order_by('-created_at')
     return render(request, 'studquest.html', {'threads': threads})
 @login_required
 def thrd_detail(request,pk):#thrd_id
@@ -45,13 +45,11 @@ def thrd_detail(request,pk):#thrd_id
     #Posts = Post.objects.filter(thread=thread).order_by('-created_on')
     thread = get_object_or_404(Thread, pk=pk)
     messagess = thread.messagess.order_by('created_at')
-
     if request.method == "POST":
         form = MessageForm(request.POST)
         if form.is_valid():
             msg = form.save(commit=False)
             msg.thread = thread
-            #msg.created_by = request.user #<-.author = req
             msg.author = request.user
             msg.save()
             return redirect('threaddetail',pk=pk)#<- thrd_id
@@ -66,10 +64,8 @@ def thrd_create(request):
         if form.is_valid():
             thread = form.save(commit=False)
             thread.created_by = request.user
-            thread.save()#<-form.save()
-            #messages.success(request, "Thread created successfully!")
-            #print("Thread created successfully")
-            return redirect('threaddetail',pk=thread.pk) #<--thread.id
+            thread.save()
+            return redirect('threaddetail', pk=thread.pk)
     else:
         form = ThreadForm()
     return render(request,'thrdcreate.html',{"form":form})
@@ -369,8 +365,7 @@ def register(request):      #okok so just use django form
             print("User created successfully")
             return redirect("login")
     else:
-        form = UserCreationForm()   #form not posting but then send to retry to not lose data
-
+        form = UserCreationForm()
     return render(request, "register.html", {"form": form})
 
 @login_required
@@ -378,8 +373,7 @@ def profile(request):
     if request.method == "POST":    #needs POST
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, instance=request.user.profile)
-
-        if u_form.is_valid() and p_form.is_valid(): #check if valid
+        if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
             messages.success(request, "Profile updated successfully!")
