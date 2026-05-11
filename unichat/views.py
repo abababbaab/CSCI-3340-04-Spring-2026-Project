@@ -410,7 +410,7 @@ def course_create(request):
 
 @login_required
 def course_detail(request, pk):
-    course = get_object_or_404(Course, pk=pk, created_by=request.user)
+    course = get_object_or_404(Course, pk=pk)
     assignments = Assignments.objects.filter(course=course).order_by('-created_at')
     quizs = Quiz.objects.filter(course=course).order_by('-created_at')
     tests = Test.objects.filter(course=course).order_by('-created_at')
