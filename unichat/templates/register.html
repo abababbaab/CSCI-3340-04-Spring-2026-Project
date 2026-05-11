@@ -1,19 +1,50 @@
-{% extends 'home.html' %}
+{% extends 'baseold.html' %}
 {% load static %}
 
-{% block title %}Register{% endblock %}
-{% block nav_buttons %}{% endblock %}
+{% block body_class %}dark-page{% endblock %}
 
 {% block content %}
-<div id="container">
-    <div class="form-wrap">
-        <h2>Create Account</h2>
+<div id="container" style="
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    padding: 2rem;
+">
+    <div class="form-wrap" style="
+        width: 100%;
+        max-width: 850px;
+        background: #111;
+        border: 1px solid #2a2a2a;
+        border-radius: 12px;
+        padding: 2.5rem;
+        color: #fff;
+        text-align: center;
+    ">
+        <h2 style="color: #fff; margin-bottom: 1.5rem;">Create Account</h2>
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Create Account</button>
+            <button type="submit" style="
+                width: 100%;
+                padding: 0.6rem;
+                margin-top: 1rem;
+                background: #fff;
+                color: #000;
+                border: none;
+                border-radius: 6px;
+                font-weight: 600;
+                cursor: pointer;
+            ">Create Account</button>
         </form>
-        <a href="{% url 'login' %}">Already have an account? Log in</a>
+        <a href="{% url 'login' %}" style="
+            display: block;
+            margin-top: 1rem;
+            color: #aaa;
+            font-size: 0.875rem;
+            text-decoration: none;
+        ">Already have an account? Log in</a>
     </div>
 </div>
 {% endblock %}
