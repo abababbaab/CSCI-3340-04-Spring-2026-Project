@@ -384,7 +384,7 @@ def profile(request):
             p_form.save()
             messages.success(request, "Profile updated successfully!")
             print("User profile udpated successfully")
-            return redirect("profile")  #change later to home or dash
+            return redirect("home")  #change later to home or dash
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
