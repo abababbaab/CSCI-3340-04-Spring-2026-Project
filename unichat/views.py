@@ -1,12 +1,14 @@
+from concurrent.futures import thread
+from mailbox import Message
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
-from .models import Thread, Messagess, Assignments, Quiz, Test
+from .models import Thread, Messagess, Assignments, Quiz, Test, AssignMessage, QMessage, TMessage
 from .forms import UserUpdateForm, ProfileUpdateForm, ThreadForm, MessageForm, AssignForm, AssignMessForm, QuizForm, \
     QuizMessForm, TMessForm, TestForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
-
+from django.http import HttpResponseForbidden
 from .models import Course
 from .forms import CourseForm
 # Create your views here.
@@ -69,7 +71,51 @@ def thrd_create(request):
     else:
         form = ThreadForm()
     return render(request,'thrdcreate.html',{"form":form})
-
+@login_required
+def edit_thread(request,pk):
+    thread = get_object_or_404(Thread, pk=pk)
+    if thread.created_by != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        form = ThreadForm(request.POST, instance=thread)
+        if form.is_valid():
+            form.save()
+            return redirect('threaddetail',pk=thread.pk)#pk
+    else:
+        form = ThreadForm(instance=thread)
+    return render(request, 'edit_thread.html', {'form': form, 'thread': thread})
+@login_required
+def edit_message(request,pk):
+    message = get_object_or_404(Messagess, pk=pk)
+    if message.author != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        form = MessageForm(request.POST, instance=message)
+        if form.is_valid():
+            form.save()
+            return redirect('threaddetail',pk=message.thread.pk)
+    else:
+        form = MessageForm(instance=message)
+    return render(request, 'edit_mess.html', {'form': form, 'message': message})
+@login_required
+def delete_thread(request,pk):
+    thread = get_object_or_404(Thread, pk=pk)
+    if thread.created_by != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        thread.delete()
+        return redirect('studentquestions')
+    return render(request, 'del_thread.html', {'thread': thread})
+@login_required
+def delete_message(request,pk):
+    message = get_object_or_404(Messagess, pk=pk)
+    if message.author != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        thread_pk = message.thread.pk
+        message.delete()
+        return redirect('threaddetail',pk=thread_pk)
+    return render(request, 'del_mess.html', {'message': message})
 #assigments
 #------------------------------------------------------------------------------------------------
 def assign_detail(request,pk):
@@ -100,6 +146,54 @@ def assign_create(request, pk):
     else:
         form = AssignForm()
     return render(request, 'assign_create.html', {'form': form})
+@login_required
+def edit_assignment(request,pk):
+    assignment = get_object_or_404(Assignments, pk=pk)
+    if assignment.created_by != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        form = AssignForm(request.POST, instance=assignment)
+        if form.is_valid():
+            form.save()
+            return redirect('assignmentdetail',pk=assignment.pk)
+    else:
+        form = AssignForm(instance=assignment)
+    return render(request, 'edit_assignment.html', {'form': form,
+                                                    'assignment': assignment})
+
+@login_required
+def del_assignment(request,pk):
+    assign = get_object_or_404(Assignments, pk=pk)
+    if assign.created_by != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        course_pk = assign.course.pk
+        assign.delete()
+        return redirect('course_detail', pk=course_pk)
+    return render(request, 'del_assign.html', {'assign': assign})
+@login_required
+def edit_amessage(request,pk):
+    amessage = get_object_or_404(AssignMessage, pk=pk)
+    if amessage.author != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        form = AssignMessForm(request.POST, instance=amessage)
+        if form.is_valid():
+            form.save()
+            return redirect('assignmentdetail',pk=amessage.assignment.pk)
+    else:
+        form = AssignMessForm(instance=amessage)
+    return render(request, 'edit_amess.html', {'form': form, 'message': amessage})
+@login_required
+def del_amessage(request,pk):
+    amessage = get_object_or_404(AssignMessage, pk=pk)
+    if amessage.author != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        assignment_pk = amessage.assignment.pk
+        amessage.delete()
+        return redirect('assignmentdetail',pk=assignment_pk)
+    return render(request, 'del_amess.html', {'amessage': amessage})
 #quiz
 #-------------------------------------------------------------------
 def quiz_detail(request,pk):
@@ -130,6 +224,53 @@ def quiz_create(request, pk):
     else:
         form = QuizForm()
     return render(request, 'quiz_create.html', {'form': form})
+@login_required
+def edit_quiz(request,pk):
+    quiz = get_object_or_404(Quiz, pk=pk)
+    if quiz.created_by != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        form = QuizForm(request.POST, instance=quiz)
+        if form.is_valid():
+            form.save()
+            return redirect('quizdetail',pk=quiz.pk)
+    else:
+        form = QuizForm(instance=quiz)
+    return render(request, 'edit_quiz.html', {'form': form, 'quiz': quiz})
+@login_required
+def del_quiz(request,pk):
+    quiz = get_object_or_404(Quiz, pk=pk)
+    if quiz.created_by != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        course_pk = quiz.course.pk
+        quiz.delete()
+        return redirect('course_detail',pk=course_pk)
+    return render(request, 'del_quiz.html', {'quiz': quiz})
+@login_required
+def edit_qmessage(request,pk):
+    message = get_object_or_404(QMessage, pk=pk)
+    if message.author != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        form = QuizMessForm(request.POST, instance=message)
+        if form.is_valid():
+            form.save()
+            return redirect('quizdetail',pk=message.quiz.pk)
+    else:
+        form = QuizMessForm(instance=message)
+    return render(request, 'edit_qmess.html', {'form': form, 'message': message})
+@login_required
+def del_qmessage(request,pk):
+    qmessage = get_object_or_404(QMessage, pk=pk)
+    if qmessage.author != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        quiz_pk = qmessage.quiz.pk
+        qmessage.delete()
+        return redirect('quizdetail',pk=quiz_pk)
+    return render(request, 'del_qmess.html', {'qmessage': qmessage})
+
 #test
 #---------------------------------------------------------
 def test_detail(request,pk):
@@ -160,9 +301,52 @@ def test_create(request, pk):
     else:
         form = TestForm()
     return render(request, 'test_create.html', {'form': form})
-
-
-
+@login_required
+def edit_test(request,pk):
+    test = get_object_or_404(Test, pk=pk)
+    if test.created_by != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        form = TestForm(request.POST, instance=test)
+        if form.is_valid():
+            form.save()
+            return redirect('testdetail',pk=test.pk)
+    else:
+        form = TestForm(instance=test)
+    return render(request, 'edit_test.html', {'form': form, 'test': test})
+@login_required
+def del_test(request,pk):
+    test = get_object_or_404(Test, pk=pk)
+    if test.created_by != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        course_pk = test.course.pk
+        test.delete()
+        return redirect('course_detail',pk=course_pk)
+    return render(request, 'del_test.html', {'test': test})
+@login_required
+def edit_tmessage(request,pk):
+    message = get_object_or_404(TMessage, pk=pk)
+    if message.author != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        form = TMessForm(request.POST, instance=message)
+        if form.is_valid():
+            form.save()
+            return redirect('testdetail',pk=message.test.pk)
+    else:
+        form = TMessForm(instance=message)
+    return render(request, 'edit_tmess.html', {'form': form, 'message': message})
+@login_required
+def del_tmessage(request,pk):
+    tmessage = get_object_or_404(TMessage, pk=pk)
+    if tmessage.author != request.user:
+        return HttpResponseForbidden()
+    if request.method == "POST":
+        test_pk = tmessage.test.pk
+        tmessage.delete()
+        return redirect('testdetail',pk=test_pk)
+    return render(request, 'del_tmess.html', {'tmessage': tmessage})
 
 
 

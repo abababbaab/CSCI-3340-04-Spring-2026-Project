@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit message</title>
+</head>
+<body>
+    <h1>Edit message</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+        <a href="{% url 'quizdetail' message.quiz.pk %}">Cancel</a>
+    </form>
+    <form method="POST" action="{% url 'qmessdelete' message.pk %}">
+        {% csrf_token %}
+        <button type="submit" onclick="return confirm('Delete this message?')">Delete</button>
+    </form>
+</body>
+</html>

@@ -2,7 +2,7 @@
 
 {% block title %} Thread Detail {% endblock %}
 
-{% block header %}
+{% block content %}
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Source+Sans+3:wght@400;500&display=swap');
@@ -147,12 +147,17 @@
 <div class="thread-wrapper">
 
   <h1 class="thread-title">{{ thread.title }}</h1>
-
+  {% if request.user == thread.created_by %}
+    <a href="{% url 'threadedit' thread.pk %}">Edit Thread</a>
+  {% endif %}
   <div class="messages-list">
     {% for msg in messagess %}
     <div class="message-card">
       <div class="message-author">{{ msg.author }}</div>
       <p class="message-body">{{ msg.body }}</p>
+      {% if request.user == msg.author %}
+        <a href="{% url 'messedit' msg.pk %}">Edit</a>
+      {% endif %}
     </div>
     {% endfor %}
   </div>

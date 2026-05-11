@@ -6,9 +6,15 @@
 </head>
 <body>
   <h1>{{ test.title }}</h1>
+  {% if request.user == test.created_by %}
+    <a href="{% url 'testedit' test.pk %}">Edit Test</a>
+  {% endif %}
 <h2>chat</h2>
 {% for msg in messagess %}
     <p><strong>{{ msg.author }}</strong>: {{ msg.body }}</p>
+    {% if request.user == msg.author %}
+        <a href="{% url 'tmessedit' msg.pk %}">Edit</a>
+    {% endif %}
 {% endfor %}
 <form method="POST">
     {% csrf_token %}

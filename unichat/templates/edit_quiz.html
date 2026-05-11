@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Quiz</title>
+</head>
+<body>
+    <h1>Quiz edit</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+        <a href="{% url 'quizdetail' quiz.pk %}">Cancel</a>
+    </form>
+    <form method="post" action="{% url 'quizdelete' quiz.pk %}">
+        {% csrf_token %}
+        <button type="submit" onclick="return confirm('Delete this Quiz?')">Delete</button>
+    </form>
+</body>
+</html>
