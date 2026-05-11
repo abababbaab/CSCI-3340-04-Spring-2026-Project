@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Assignment</title>
+</head>
+<body>
+    <h1>Assignment edit</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+        <a href="{% url 'assignmentdetail' assignment.pk %}">Cancel</a>
+    </form>
+    <form method="post" action="{% url 'assignmentdelete' assignment.pk %}">
+        {% csrf_token %}
+        <button type="submit" onclick="return confirm('Delete this Assignment?')">Delete</button>
+    </form>
+</body>
+</html>
