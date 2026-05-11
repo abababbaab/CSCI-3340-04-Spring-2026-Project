@@ -23,13 +23,35 @@
             </div>
             <ul>
                 {% block nav_buttons %}
-                <button class="btn-login"><a href="{% url 'login' %}">Log in</a></button>
-                <button class="btn-signup"><a href="{% url 'register' %}">Sign up</a></button>
+                {% if request.user.is_authenticated %}
+                    <div class="nav-user">{{ request.user.username }}</div>
+                    <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-login">Log out</button>
+                    </form>
+                {% else %}
+                    <button class="btn-login"><a href="{% url 'login' %}">Log in</a></button>
+                    <button class="btn-signup"><a href="{% url 'register' %}">Sign up</a></button>
+                {% endif %}
                 {% endblock %}
             </ul>
         </div>
      </nav>
-
+    {% block content %}
+     <div class="home-landing">
+         <pre class="ascii-logo">
+      ___  ___  ________   ___  ________  ___  ___  ________  _________   
+     |\  \|\  \|\   ___  \|\  \|\   ____\|\  \|\  \|\   __  \|\___   ___\ 
+     \ \  \\\  \ \  \\ \  \ \  \ \  \___|\ \  \\\  \ \  \|\  \|___ \  \_| 
+      \ \  \\\  \ \  \\ \  \ \  \ \  \    \ \   __  \ \   __  \   \ \  \  
+       \ \  \\\  \ \  \\ \  \ \  \ \  \____\ \  \ \  \ \  \ \  \   \ \  \ 
+        \ \_______\ \__\\ \__\ \__\ \_______\ \__\ \__\ \__\ \__\   \ \__\
+         \|_______|\|__| \|__|\|__|\|_______|\|__|\|__|\|__|\|__|    \|__|
+         </pre>
+         <p class="home-subtitle">Your university chatting website.</p>
+     </div>
+    {% endblock %}
+    
      <div id="mysideNav" class="sideNav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="{% url 'chat' %}">Chats</a>
@@ -37,7 +59,6 @@
         <a href="{% url 'threadcreate' %}">Create thread</a>
      </div>
 
-     {% block content %}{% endblock %}
 
     <script>
         function openNav() {

@@ -1,10 +1,10 @@
 {% extends 'home.html' %}
+{% load static %}
 
 {% block title %}Register{% endblock %}
 {% block nav_buttons %}{% endblock %}
 
 {% block content %}
-
 <div id="container">
     <div class="form-wrap">
         <h2>Create Account</h2>
@@ -16,5 +16,4 @@
         <a href="{% url 'login' %}">Already have an account? Log in</a>
     </div>
 </div>
-
 {% endblock %}
